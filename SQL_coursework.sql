@@ -1,5 +1,5 @@
 ####################################################################################################
-									-- Áàçà äàííûõ î êèíî
+-- Ð¡Ð¾Ð·Ð´Ð°Ð½Ð¸Ðµ Ð±Ð°Ð·Ñ‹ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¾ ÐºÐ¸Ð½Ð¾ Ð¸ Ð½Ð°Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ðµ ÐµÑ‘ ÑÐ²ÐµÐ´ÐµÐ½Ð¸ÑÐ¼Ð¸
 ####################################################################################################
 
 DROP DATABASE IF EXISTS cinema;
@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS genres;
 CREATE TABLE genres(
 	id SERIAL,
 	genre VARCHAR(200)	
-) COMMENT 'Æàíðû';
+) COMMENT 'Ð¶Ð°Ð½Ñ€Ñ‹';
 
 INSERT INTO genres (genre) 
 VALUES ('Action'), ('Thriller'), ('Detective story'), ('Fantastics'), ('Comedy'), ('Horror');
@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS countries;
 CREATE TABLE countries(
 	id SERIAL,
 	country VARCHAR(200)	
-) COMMENT 'Ñòðàíû';
+) COMMENT 'ÑÑ‚Ñ€Ð°Ð½Ñ‹';
 
 INSERT INTO countries (country) 
 VALUES ('USA'), ('Germany'), ('UK'), ('France'), ('Canada'), ('Iran'), ('Japan'), ('Poland'), ('Spain'), ('Italy');
@@ -34,7 +34,7 @@ CREATE TABLE actors(
 	
 	FOREIGN KEY (from_country_id) REFERENCES countries(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	INDEX idx_actors_name (first_name, last_name)
-) COMMENT 'Àêòåðû';
+) COMMENT 'Ð°ÐºÑ‚ÐµÑ€Ñ‹';
 
 INSERT INTO 
 	actors (first_name, last_name, from_country_id, birthday_at) 
@@ -59,7 +59,7 @@ CREATE TABLE directors(
 	birthday_at DATE NOT NULL,
 	
 	FOREIGN KEY (from_country_id) REFERENCES countries(id) ON UPDATE CASCADE ON DELETE CASCADE
-) COMMENT 'Ðåæèññåðû';
+) COMMENT 'Ñ€ÐµÐ¶Ð¸ÑÑÐµÑ€Ñ‹';
 
 INSERT INTO 
 	directors (first_name, last_name, from_country_id, birthday_at) 
@@ -84,7 +84,7 @@ CREATE TABLE producers(
 	birthday_at DATE NOT NULL,
 	
 	FOREIGN KEY (from_country_id) REFERENCES countries(id) ON UPDATE CASCADE ON DELETE CASCADE
-) COMMENT 'Ïðîäþññåðû';
+) COMMENT 'Ð¿Ñ€Ð¾Ð´ÑŽÑÑÐµÑ€Ñ‹';
 
 INSERT INTO 
 	producers (first_name, last_name, from_country_id, birthday_at) 
@@ -109,7 +109,7 @@ CREATE TABLE composers(
 	birthday_at DATE NOT NULL,
 	
 	FOREIGN KEY (from_country_id) REFERENCES countries(id) ON UPDATE CASCADE ON DELETE CASCADE
-) COMMENT 'Êîìïîçèòîðû';
+) COMMENT 'ÐºÐ¾Ð¼Ð¿Ð¾Ð·Ð¸Ñ‚Ð¾Ñ€Ñ‹';
 
 INSERT INTO 
 	composers (first_name, last_name, from_country_id, birthday_at) 
@@ -131,7 +131,7 @@ CREATE TABLE screenwriters(
 	birthday_at DATE NOT NULL,
 	
 	FOREIGN KEY (from_country_id) REFERENCES countries(id) ON UPDATE CASCADE ON DELETE CASCADE
-) COMMENT 'Ñöåíàðèñòû';
+) COMMENT 'ÑÑ†ÐµÐ½Ð°Ñ€Ð¸ÑÑ‚Ñ‹';
 
 INSERT INTO 
 	screenwriters (first_name, last_name, from_country_id, birthday_at) 
@@ -156,7 +156,7 @@ CREATE TABLE directors_of_photography(
 	birthday_at DATE NOT NULL,
 	
 	FOREIGN KEY (from_country_id) REFERENCES countries(id) ON UPDATE CASCADE ON DELETE CASCADE	
-) COMMENT 'Îïåðàòîðû';
+) COMMENT 'Ð¾Ð¿ÐµÑ€Ð°Ñ‚Ð¾Ñ€Ñ‹';
 
 INSERT INTO 
 	directors_of_photography (first_name, last_name, from_country_id, birthday_at) 
@@ -170,6 +170,7 @@ VALUES
 	('Janusz', 'Kaminski', '8', '1959-07-27'),
 	('Michael', 'Ballhaus', '2', '1935-08-05'),
 	('Darius', 'Khondji', '6', '1955-10-21');
+
 
 DROP TABLE IF EXISTS films;
 CREATE TABLE films(
@@ -195,7 +196,7 @@ CREATE TABLE films(
 	FOREIGN KEY (from_directors_of_photography_id) REFERENCES directors_of_photography(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (from_country_id) REFERENCES countries(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	INDEX idx_film_name (film_name)
-) COMMENT 'Ôèëüìû';
+) COMMENT 'Ñ„Ð¸Ð»ÑŒÐ¼Ñ‹';
 
 INSERT INTO 
 	films (film_name, from_genre_id, from_director_id, from_producer_id, from_composers_id, from_screenwriters_id, from_directors_of_photography_id, from_country_id, budget, earnings, watches, ratio, premier_date)
@@ -212,7 +213,6 @@ VALUES
 	('Saving Private Ryan', '1', '7', '10', '7', '10', '7', '1', '70000000', '481840909' , '23000000' , '8.2', '1998-07-21');
 
 
--- äëÿ ðåàëèçàöèè îòíîøåíèé ìíîãèå êî ìíîãèì - â îäíîì êèíî ìîæåò áûòü ìíîãî àêòåðîâ è íàîáîðîò
 DROP TABLE IF EXISTS films_actors;
 CREATE TABLE films_actors(
 	id SERIAL,
@@ -221,7 +221,7 @@ CREATE TABLE films_actors(
 	
 	FOREIGN KEY (from_actors_id) REFERENCES actors(id) ON UPDATE CASCADE ON DELETE CASCADE,
 	FOREIGN KEY (from_films_id) REFERENCES films(id) ON UPDATE CASCADE ON DELETE CASCADE	
-) COMMENT 'Îïåðàòîðû';
+) COMMENT 'Ð’ÑÐ¿Ð¾Ð¼Ð¾Ð³Ð°Ñ‚ÐµÐ»ÑŒÐ½Ð°Ñ Ñ‚Ð°Ð±Ð»Ð¸Ñ†Ð°';
 
 INSERT INTO
 	films_actors (from_actors_id, from_films_id)
@@ -244,10 +244,10 @@ VALUES
 	('10','10');
 
 ####################################################################################################
-										-- JOIN çàïðîñû 
+-- Ð¡Ð»Ð¾Ð¶Ð½Ñ‹Ðµ Ð·Ð°Ð¿Ñ€Ð¾ÑÑ‹
 ####################################################################################################
 
--- Îòîáðàòü ôèëüìû Àìåðèêàíñêîãî ïðîèçâîäñòâà. Óïîðÿäî÷èòü ïî óáûâàíèþ ïðèáûëè. Óêàçàòü ðåæèññåðà
+-- ÐžÑ‚Ð¾Ð±Ñ€Ð°Ñ‚ÑŒ Ñ„Ð¸Ð»ÑŒÐ¼Ñ‹ Ð°Ð¼ÐµÑ€Ð¸ÐºÐ°Ð½ÑÐºÐ¾Ð³Ð¾ Ð¿Ñ€Ð¾Ð¸Ð·Ð²Ð¾Ð´ÑÑ‚Ð²Ð°. Ð£Ð¿Ð¾Ñ€ÑÐ´Ð¾Ñ‡Ð¸Ñ‚ÑŒ Ð¸Ñ… Ð¿Ð¾ ÑƒÐ±Ñ‹Ð²Ð°Ð½Ð¸ÑŽ Ð¿Ñ€Ð¸Ð±Ñ‹Ð»Ð¸. Ð£ÐºÐ°Ð·Ð°Ñ‚ÑŒ Ñ€ÐµÐ¶Ð¸ÑÑÐµÑ€Ð°.
 
 SELECT 
 	film_name,
@@ -264,7 +264,7 @@ WHERE
 ORDER BY 
 	profit DESC;
 	
--- Íàéòè ôèëüì ôðàíöóçñêîãî ïðîèçâîäñòâà ñ ñàìûì âûñîêèì ðåéòèíãîì. Âûâåñòè ãëàâíîãî àêòåðà è ðåéòèíã
+-- ÐÐ°Ð¹Ñ‚Ð¸ ÑÐ°Ð¼Ñ‹Ð¹ ÑƒÑÐ¿ÐµÑˆÐ½Ñ‹Ð¹ Ñ„Ð¸Ð»ÑŒÐ¼ Ñ„Ñ€Ð°Ð½Ñ†ÑƒÐ·ÑÐºÐ¾Ð³Ð¾ Ð¿Ñ€Ð¾Ð¸Ð·Ð²Ð¾Ð´ÑÑ‚Ð²Ð° Ð¿Ð¾ Ñ€ÐµÐ¹Ñ‚Ð¸Ð½Ð³Ñƒ. Ð£ÐºÐ°Ð·Ð°Ñ‚ÑŒ Ð³Ð»Ð°Ð²Ð½Ð¾Ð³Ð¾ Ð°ÐºÑ‚ÐµÑ€Ð°.
 	
 SELECT
 	film_name,
@@ -284,7 +284,7 @@ ORDER BY
 	ratio DESC 
 LIMIT 1;
 
--- Îòîáðàòü àêòåðîâ, ó êîòîðûõ áîëåå îäíîãî ôèëüìà â ïîäáîðêå.
+-- ÐžÑ‚Ð¾Ð±Ñ€Ð°Ñ‚ÑŒ Ð²ÑÐµÑ… Ð°ÐºÑ‚ÐµÑ€Ð¾Ð², ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ðµ ÑÐ½ÑÐ»Ð¸ÑÑŒ Ð±Ð¾Ð»ÐµÐµ Ñ‡ÐµÐ¼ Ð² Ð¾Ð´Ð½Ð¾Ð¼ Ñ„Ð¸Ð»ÑŒÐ¼Ðµ Ð¿Ð¾Ð´Ð±Ð¾Ñ€ÐºÐ¸. ÐŸÐ¾ÑÑ‡Ð¸Ñ‚Ð°Ñ‚ÑŒ ÐºÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ñ„Ð¸Ð»ÑŒÐ¼Ð¾Ð².
 
 SELECT 
 	CONCAT(actors.first_name, ' ', actors.last_name) AS main_actor,
@@ -299,6 +299,8 @@ GROUP BY
 	actors.id 
 HAVING 
 	cnt > 1
+ORDER BY 
+	cnt DESC;
 
 	
 	
