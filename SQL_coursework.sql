@@ -302,7 +302,40 @@ HAVING
 ORDER BY 
 	cnt DESC;
 
+-- Отобрать фильмы по жанрам, которые вышли в прокат позже остальных
+
+SELECT 
+	film_name,
+	genre,
+	premier_date 
+FROM 
+	films JOIN genres ON films.from_genre_id = genres.id 
+WHERE 
+	premier_date IN (
+	SELECT max(premier_date)
+	FROM films JOIN genres ON films.from_genre_id = genres.id
+	GROUP BY genre
+	)
+GROUP BY 
+	genre
+
+-- Отобрать страны, фильмы которых не представлены в подборке
 	
+SELECT 
+	c.country 
+FROM 
+	countries c
+WHERE 
+	c.country NOT IN (
+	SELECT c1.country
+	FROM countries c1 JOIN films f ON f.from_country_id = c1.id)
+
 	
 
+	
+	
+	
+	
+	
+	
 
