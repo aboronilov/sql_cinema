@@ -328,13 +328,26 @@ FROM
 WHERE 
 	c.country NOT IN (
 	SELECT c1.country
-	FROM countries c1 JOIN films f ON f.from_country_id = c1.id)
+	FROM countries c1 JOIN films f ON f.from_country_id = c1.id
+	)
 
 	
+####################################################################################################
+-- Оконные функции
+####################################################################################################
 
+-- Отобрать фильмы по жанрам и пронумеровать выдачу внутри жанра. Упорядочить группы по росту бюджета
 	
-	
-	
+SELECT
+	ROW_NUMBER () OVER(PARTITION BY genre ORDER BY from_genre_id) row_num,
+	film_name,
+	genre,
+	budget	
+FROM 
+	films
+JOIN 
+	genres ON genres.id = films.from_genre_id 
+
 	
 	
 	
